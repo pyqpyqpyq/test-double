@@ -7,8 +7,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import sun.jvm.hotspot.utilities.Assert;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GradeServiceTest {
@@ -16,13 +20,16 @@ public class GradeServiceTest {
     编写GradeService类的单元测试，单元测试calculateAverageGrades方法
     * */
     @Mock
-    private GradeService mockGradeService;
+    private GradeSystem mockGradeSystem;
     @InjectMocks
-    private GradeSystem gradeSystem;
+    private GradeService gradeService;
     @Test
     public void shouldReturn90WhenCalculateStudentAverageGradeAndGradeIs80And90And100() {
-        double result=mockGradeService.calculateAverageGrades(1);
-        Assertions.assertEquals(90.0, result);
+        doReturn(Arrays.asList(80.0,90.0,100.0)).when(mockGradeSystem).gradesFor(1);
+        Assertions.assertEquals(90.0,gradeService.calculateAverageGrades(1));
+//        double result=mockGradeService.calculateAverageGrades(1);
+//        Assertions.assertEquals(90.0, result);
 //        verify(mockGradeService,times(1)).calculateAverageGrades();
+
     }
 }
